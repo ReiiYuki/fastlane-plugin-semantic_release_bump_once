@@ -133,6 +133,10 @@ module Fastlane
         UI.message("Found #{splitted.length} commits since last release")
         releases = params[:releases]
 
+        should_bump_major = false
+        should_bump_minor = false
+        should_bump_patch = false
+
         format_pattern = lane_context[SharedValues::CONVENTIONAL_CHANGELOG_ACTION_FORMAT_PATTERN]
         splitted.each do |line|
           parts = line.split("|")
@@ -152,23 +156,37 @@ module Fastlane
             ignore_scopes: params[:ignore_scopes]
           )
 
+          bump_display = ""
           if commit[:release] == "major" || commit[:is_breaking_change]
-            next_major += 1
-            next_minor = 0
-            next_patch = 0
+            should_bump_major = true
+            bump_display = "MAJOR"
           elsif commit[:release] == "minor"
-            next_minor += 1
-            next_patch = 0
+            should_bump_minor = true
+            bump_display = "minor"
           elsif commit[:release] == "patch"
-            next_patch += 1
+            should_bump_patch = true
+            bump_display = "patch"
           end
 
           unless commit[:is_codepush_friendly]
             is_next_version_compatible_with_codepush = false
           end
 
-          next_version = "#{next_major}.#{next_minor}.#{next_patch}"
-          UI.message("#{next_version}: #{subject}") if params[:show_version_path]
+          # next_version = "#{next_major}.#{next_minor}.#{next_patch}"
+          # UI.message("#{next_version}: #{subject}") if params[:show_version_path]
+          UI.message("(#{bump_display}) => #{subject}") if params[:show_bump_type]
+        end
+
+        # Update to the next version
+        if commit[:release] == "major" || commit[:is_breaking_change]
+          next_major += 1
+          next_minor = 0
+          next_patch = 0
+        elsif commit[:release] == "minor"
+          next_minor += 1
+          next_patch = 0
+        elsif commit[:release] == "patch"
+          next_patch += 1
         end
 
         next_version = "#{next_major}.#{next_minor}.#{next_patch}"
@@ -340,9 +358,16 @@ module Fastlane
             type: Array,
             optional: true
           ),
+          # FastlaneCore::ConfigItem.new(
+          #   key: :show_version_path,
+          #   description: "True if you want to print out the version calculated for each commit",
+          #   default_value: true,
+          #   type: Boolean,
+          #   optional: true
+          # ),
           FastlaneCore::ConfigItem.new(
-            key: :show_version_path,
-            description: "True if you want to print out the version calculated for each commit",
+            key: :show_bump_type,
+            description: "True if you want to print out version bump type for each commit",
             default_value: true,
             type: Boolean,
             optional: true
