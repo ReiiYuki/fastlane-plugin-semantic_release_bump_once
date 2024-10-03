@@ -1,4 +1,4 @@
-require 'fastlane/plugin/semantic_release/version'
+require 'fastlane/plugin/semantic_release_bump_once/version'
 
 module Fastlane
   module SemanticRelease
