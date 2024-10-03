@@ -178,14 +178,14 @@ module Fastlane
         end
 
         # Update to the next version
-        if commit[:release] == "major" || commit[:is_breaking_change]
+        if should_bump_major
           next_major += 1
           next_minor = 0
           next_patch = 0
-        elsif commit[:release] == "minor"
+        elsif should_bump_minor
           next_minor += 1
           next_patch = 0
-        elsif commit[:release] == "patch"
+        elsif should_bump_minor
           next_patch += 1
         end
 
