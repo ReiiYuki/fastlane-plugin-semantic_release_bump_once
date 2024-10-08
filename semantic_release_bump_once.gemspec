@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = 'xotahal@gmail.com'
 
   spec.summary       = 'Automated version managment and generator of release notes.'
-  spec.homepage      = "https://github.com/BreamIsAFish/fastlane-plugin-semantic_release-bump-once"
+  spec.homepage      = "https://github.com/ReiiYuki/fastlane-plugin-semantic_release-bump-once"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
