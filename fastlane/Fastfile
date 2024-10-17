@@ -20,7 +20,7 @@ lane :publish do
 
   # Put down the next version - it will be taken in gemspec then
   # see .gemspec and version.rb
-  code = "module Fastlane module SemanticRelease VERSION = \"#{next_version}\" end end"
+  code = "module Fastlane module SemanticReleaseBumpOnce VERSION = \"#{next_version}\" end end"
   filepath = "../lib/fastlane/plugin/semantic_release_bump_once/version.rb"
   sh("echo '#{code}' > #{filepath}")
 

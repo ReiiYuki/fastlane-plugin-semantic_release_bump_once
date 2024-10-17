@@ -6,7 +6,7 @@ require 'fastlane/plugin/semantic_release_bump_once/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'fastlane-plugin-semantic_release_bump_once'
-  spec.version       = Fastlane::SemanticRelease::VERSION
+  spec.version       = Fastlane::SemanticReleaseBumpOnce::VERSION
   spec.author        = 'Jiří Otáhal'
   spec.email         = 'xotahal@gmail.com'
 
