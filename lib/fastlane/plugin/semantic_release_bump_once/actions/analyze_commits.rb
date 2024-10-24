@@ -1,5 +1,5 @@
 require 'fastlane/action'
-require_relative '../helper/semantic_release_helper'
+require_relative '../helper/semantic_release_bump_once_helper'
 
 module Fastlane
   module Actions
